@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const Book = require('../models/book');
+const Author = require('../models/author');
 
 /* GET users listing. */
 router.get('/add-author', function (req, res, next) {
@@ -9,13 +10,21 @@ router.get('/add-author', function (req, res, next) {
 });
 
 router.post('/add-author', async function (req, res) {
-  // Iteración 1
+  const { firstName, familyName, dateBirth, dateDeath } = req.body
+  const createdAuthor = await Author.create({
+    firstName,
+    familyName,
+    dateBirth,
+    dateDeath
+  })
+  res.json(createdAuthor);
+
 })
 
 
 router.get('/add-book', async (req, res) => {
   // Recuperar todos los autores de la coleccion Authors
-  const authors = {} // TODO: Iteración 2
+  const authors = await Author.find()
   res.render('add-book', {
     authors
   })
@@ -23,9 +32,6 @@ router.get('/add-book', async (req, res) => {
 
 router.post('/add-book', async (req, res) => {
 
-  // ES6. Dentro del objeto req.body existe un campo de nombre 'title', otro 'summary', etc.
-
-  // Iteración 3: NO hay que hacer nada, solo contestar a la pregunta del README.md
   const { title, summary, isbn, author } = req.body;
 
   const book = new Book({
@@ -41,7 +47,7 @@ router.post('/add-book', async (req, res) => {
 })
 
 router.get('/books', async (req, res) => {
-  const books = await Book.find(); // Iteración 4
+  const books = await Book.find().populate('author'); // Iteración 4
 
   console.log("Libros a enviar a la vista: ", books);
 
@@ -49,5 +55,6 @@ router.get('/books', async (req, res) => {
     books
   })
 })
+
 
 module.exports = router;
