@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<%- include('./partials/_head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('./partials/_header.ejs') %>
+            <h1>Bookings list</h1>
+            <table class="w3-table w3-bordered w3-striped">
+                <thead>
+                    <tr class="w3-light-grey">
+                        <th>Title of Book</th>
+                        <th>Started Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(function(booking, index) { %>
+                        <tr class="<%= index % 2 === 0 ? 'w3-light-blue' : 'w3-light-green' %>">
+                            <td>
+                                <%= booking.book.title %>
+                            </td>
+                            <td>
+                                <%= booking.startDate.toLocaleDateString() %>
+                            </td>
+                            <td>
+                                <%= booking.endDate.toLocaleDateString() %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+    </body>
+
+</html>

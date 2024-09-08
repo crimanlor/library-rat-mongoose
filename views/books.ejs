@@ -5,16 +5,16 @@
 
     <body>
         <%- include('./partials/_header.ejs') %>
-            <h1>Lista de libros</h1>
+            <h1>Books list</h1>
             <ul class="w3-ul w3-border">
                 <% books.forEach(function(book) { %>
                     <li>
                         <p>
-                            <strong>Título: </strong>
+                            <strong>Title: </strong>
                             <%= book.title %>
                         </p>
                         <p>
-                            <strong>Resumen: </strong>
+                            <strong>Synopsis: </strong>
                             <%= book.summary %>
                         </p>
                         <p>
@@ -22,8 +22,11 @@
                             <%= book.isbn %>
                         </p>
                         <p>
-                            <strong>Autor: </strong>
+                            <strong>Author: </strong>
                             <%= book.author.firstName + ' ' + book.author.familyName %>
+                        </p>
+                        <p>
+                            <a href="/catalog/book/<%= book._id %>/booking" class="w3-button w3-teal">Add new booking</a>
                         </p>
                     </li>
                     <% }) %>
